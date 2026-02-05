@@ -510,6 +510,15 @@ rules:
   - RULE-SET,Google / Domain,Google
   - RULE-SET,Google / IP,Google,no-resolve
   - RULE-SET,Nvidia / Domain,Nvidia 
+  - RULE-SET,AVFJP / Domain,日本-故转
+  - RULE-SET,AVJP / Domain,日本-故转
+  - RULE-SET,AVCN / Domain,国内
+  - RULE-SET,AVTW / Domain,台湾-故转
+  - RULE-SET,AVHK / Domain,香港-故转
+  - RULE-SET,AVUS / Domain,美国-故转
+  - RULE-SET,AVSG / Domain,新加坡-故转
+  - RULE-SET,AVLW / Domain,国外
+  - RULE-SET,Synology / Domain,直连
   - RULE-SET,Telegram / IP,国外
   - RULE-SET,Telegram / Domain,国外
   - RULE-SET,Proxy / Domain,国外
@@ -705,6 +714,42 @@ rule-providers:
   Nvidia / Domain:
     <<: *domain
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo-mrs/geosite/nvidia.mrs"
+
+  AVFJP / Domain:
+    <<: *class
+    url: "https://raw.githubusercontent.com/1525745393/clash-ceshi/main/list/AVFJP.list"
+
+  AVJP / Domain:
+    <<: *class
+    url: "https://raw.githubusercontent.com/1525745393/clash-ceshi/main/list/AVQVJP.list"
+
+  AVCN / Domain:
+    <<: *class
+    url: "https://raw.githubusercontent.com/1525745393/clash-ceshi/main/list/AVQVCN.list"
+
+  AVTW / Domain:
+    <<: *class
+    url: "https://raw.githubusercontent.com/1525745393/clash-ceshi/main/list/AVQVTW.list"
+
+  AVHK / Domain:
+    <<: *class
+    url: "https://raw.githubusercontent.com/1525745393/clash-ceshi/main/list/AVQVHK.list"
+
+  AVUS / Domain:
+    <<: *class
+    url: "https://raw.githubusercontent.com/1525745393/clash-ceshi/main/list/AVQVUS.list"
+
+  AVSG / Domain:
+    <<: *class
+    url: "https://raw.githubusercontent.com/1525745393/clash-ceshi/main/list/AVQVSG.list"
+
+  AVLW / Domain:
+    <<: *class
+    url: "https://raw.githubusercontent.com/1525745393/clash-ceshi/main/list/AVQVUN.list"
+
+  Synology / Domain:
+    <<: *class
+    url: "https://raw.githubusercontent.com/1525745393/clash-ceshi/refs/heads/main/list/synology.list"
 
   Proxy / Domain:
     <<: *domain
