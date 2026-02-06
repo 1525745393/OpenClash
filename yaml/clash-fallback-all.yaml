@@ -138,6 +138,7 @@ default: &default
     - 印度-故转
     - 美国-故转
     - 英国-故转
+    - EMBY-故转
     - 其他-故转
     - 拒绝
 
@@ -145,6 +146,8 @@ proxy-groups:
 
   # 业务分流组
   
+  - {name: Synology, <<: *default}
+  - {name: HK-EMBY, <<: *default}
   - {name: ChatGPT, <<: *default}
   - {name: Gemini, <<: *default}
   - {name: Copilot, <<: *default}
@@ -177,6 +180,14 @@ proxy-groups:
   - {name: Microsoft, <<: *default}
   - {name: Test, <<: *default}
   - {name: Block, <<: *default}
+  - {name: AVFJP, <<: *default}
+  - {name: AVJP, <<: *default}
+  - {name: AVCN, <<: *default}
+  - {name: AVTW, <<: *default}
+  - {name: AVHK, <<: *default}
+  - {name: AVUS, <<: *default}
+  - {name: AVSG, <<: *default}
+  - {name: AVLW, <<: *default}
   - {name: 国外, <<: *default}
   - {name: 国内, <<: *default}
   - {name: 其他, <<: *default}
