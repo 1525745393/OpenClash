@@ -6,7 +6,17 @@
 
 proxy-providers:
 
-  机场名称:
+  Mitce机场:
+    url: "机场订阅地址"  
+    type: http
+    interval: 86400
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+    proxy: 直连
+
+   HK-BEUP:
     url: "机场订阅地址"  
     type: http
     interval: 86400
@@ -36,9 +46,9 @@ mode: rule
 log-level: info
 
 external-controller: 0.0.0.0:9090
-# external-ui: ui
-# external-ui-name: zashboard
-# external-ui-url: https://gh-proxy.com/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip
+external-ui: ui
+external-ui-name: zashboard
+external-ui-url: https://gh-proxy.com/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip
 secret: "123456"
 
 # ========================
