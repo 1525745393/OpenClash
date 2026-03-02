@@ -1,20 +1,70 @@
-# 澳门组
-  - name: 澳门-故转
-    type: fallback
-    interval: 300
-    lazy: false
-    proxies:
-      - 澳门-手动
-      - 澳门-自动
+# 马来西亚组
+- name: 马来西亚-故转
+  type: fallback
+  interval: 300
+  lazy: false
+  proxies:
+    - 马来西亚-手动
+    - 马来西亚-自动
+- name: 马来西亚-手动
+  type: select
+  include-all: true
+  filter: "(?=.*(马来西亚|馬來西亞|MY|Malaysia|🇲🇾)).*$"
+- name: 马来西亚-自动
+  type: url-test
+  include-all: true
+  tolerance: 50
+  interval: 300
+  filter: "(?=.*(马来西亚|馬來西亞|MY|Malaysia|🇲🇾)).*$"
 
-  - name: 澳门-手动
-    type: select
-    include-all: true
-    filter: "(?=.*(澳门|澳門|MO|Macau|🇲🇴)).*$"
+# 越南组
+- name: 越南-故转
+  type: fallback
+  interval: 300
+  lazy: false
+  proxies:
+    - 越南-手动
+    - 越南-自动
+- name: 越南-手动
+  type: select
+  include-all: true
+  filter: "(?=.*(越南|VN|Vietnam|🇻🇳)).*$"
+- name: 越南-自动
+  type: url-test
+  include-all: true
+  tolerance: 50
+  interval: 300
+  filter: "(?=.*(越南|VN|Vietnam|🇻🇳)).*$"
 
-  - name: 澳门-自动
-    type: url-test
-    include-all: true
-    tolerance: 50
-    interval: 300
-    filter: "(?=.*(澳门|澳門|MO|Macau|🇲🇴)).*$"
+# 泰国组
+- name: 泰国-故转
+  type: fallback
+  interval: 300
+  lazy: false
+  proxies:
+    - 泰国-手动
+    - 泰国-自动
+- name: 泰国-手动
+  type: select
+  include-all: true
+  filter: "(?=.*(泰国|泰|TH|Thailand|🇹🇭)).*$"
+- name: 泰国-自动
+  type: url-test
+  include-all: true
+  tolerance: 50
+  interval: 300
+  filter: "(?=.*(泰国|泰|TH|Thailand|🇹🇭)).*$"
+
+# 菲律宾组
+- name: 菲律宾-故转
+  type: fallback
+  interval: 300
+  lazy: false
+  proxies:
+    - 菲律宾-手动
+    - 菲律宾-自动
+- name: 菲律宾-手动
+  type: select
+  include-all: true
+  filter: "(?=.*(菲律宾|菲律賓|PH|Philippines|🇵🇭)).*$"
+- name: 菲律...
