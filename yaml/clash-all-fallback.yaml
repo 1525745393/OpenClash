@@ -1,70 +1,93 @@
-# 马来西亚组
-- name: 马来西亚-故转
-  type: fallback
-  interval: 300
-  lazy: false
-  proxies:
-    - 马来西亚-手动
-    - 马来西亚-自动
-- name: 马来西亚-手动
-  type: select
-  include-all: true
-  filter: "(?=.*(马来西亚|馬來西亞|MY|Malaysia|🇲🇾)).*$"
-- name: 马来西亚-自动
-  type: url-test
-  include-all: true
-  tolerance: 50
-  interval: 300
-  filter: "(?=.*(马来西亚|馬來西亞|MY|Malaysia|🇲🇾)).*$"
+# 完整配置示例
 
-# 越南组
-- name: 越南-故转
-  type: fallback
-  interval: 300
-  lazy: false
-  proxies:
-    - 越南-手动
-    - 越南-自动
-- name: 越南-手动
-  type: select
-  include-all: true
-  filter: "(?=.*(越南|VN|Vietnam|🇻🇳)).*$"
-- name: 越南-自动
-  type: url-test
-  include-all: true
-  tolerance: 50
-  interval: 300
-  filter: "(?=.*(越南|VN|Vietnam|🇻🇳)).*$"
+# 机场订阅
+submarine:
+  type: "http"
+  url: "你的机场订阅地址"
 
-# 泰国组
-- name: 泰国-故转
-  type: fallback
-  interval: 300
-  lazy: false
-  proxies:
-    - 泰国-手动
-    - 泰国-自动
-- name: 泰国-手动
-  type: select
-  include-all: true
-  filter: "(?=.*(泰国|泰|TH|Thailand|🇹🇭)).*$"
-- name: 泰国-自动
-  type: url-test
-  include-all: true
-  tolerance: 50
-  interval: 300
-  filter: "(?=.*(泰国|泰|TH|Thailand|🇹🇭)).*$"
+# 代理提供者
+proxy-providers:
+  provider1:
+    type: "http"
+    url: "你的提供者地址"
 
-# 菲律宾组
-- name: 菲律宾-故转
-  type: fallback
-  interval: 300
-  lazy: false
-  proxies:
-    - 菲律宾-手动
-    - 菲律宾-自动
-- name: 菲律宾-手动
-  type: select
-  include-all: true
-  filter: "(?=.*(菲律宾|菲律賓|PH|Philippines|🇵🇭)).*$"
-- name: 菲律...
+# 代理配置
+proxies:
+  - name: "代理1"
+    type: "ss"
+    server: "你的服务器地址"
+    port: 12345
+    password: "你的密码"
+    cipher: "chacha20-ietf-poly1305"
+
+# 端口设置
+port:
+  redir-port: 7890
+  port: 7891
+
+# DNS设置
+DNS:
+  enable: true
+  servers:
+    - "114.114.114.114"
+    - "8.8.8.8"
+
+# TUN模块
+tun:
+  enable: true
+
+# 代理组
+proxy-groups:
+  - name: "Auto"
+    type: "url-test"
+    proxies:
+      - "代理1"
+      - "proxy-providers"
+  - name: "手动"
+    type: "select"
+    proxies:
+      - "代理1"
+  - name: "越南"
+    type: "select"
+    proxies:
+      - "manual"
+      - "auto"
+  - name: "马来西亚"
+    type: "select"
+    proxies:
+      - "manual"
+      - "auto"
+  - name: "泰国"
+    type: "select"
+    proxies:
+      - "manual"
+      - "auto"
+  - name: "菲律宾"
+    type: "select"
+    proxies:
+      - "manual"
+      - "auto"
+  - name: "俄罗斯"
+    type: "select"
+    proxies:
+      - "manual"
+      - "auto"
+  - name: "墨西哥"
+    type: "select"
+    proxies:
+      - "manual"
+      - "auto"
+  - name: "印度"
+    type: "select"
+    proxies:
+      - "manual"
+      - "auto"
+  - name: "巴西"
+    type: "select"
+    proxies:
+      - "manual"
+      - "auto"
+
+# 规则设置
+rules:
+  - "DOMAIN-SUFFIX,google.com,Proxy"
