@@ -510,13 +510,13 @@ rules:
   - RULE-SET,Google / Domain,Google
   - RULE-SET,Google / IP,Google,no-resolve
   - RULE-SET,Nvidia / Domain,Nvidia 
-  - RULE-SET,AVFJP / Domain,日本-故转
-  - RULE-SET,AVJP / Domain,日本-故转
-  - RULE-SET,AVCN / Domain,国内
-  - RULE-SET,AVTW / Domain,台湾-故转
-  - RULE-SET,AVHK / Domain,香港-故转
-  - RULE-SET,AVUS / Domain,美国-故转
-  - RULE-SET,AVSG / Domain,新加坡-故转
+  - RULE-SET,AVFJP / Domain,国外
+  - RULE-SET,AVJP / Domain,国外
+  - RULE-SET,AVCN / Domain,国外
+  - RULE-SET,AVTW / Domain,国外
+  - RULE-SET,AVHK / Domain,国外
+  - RULE-SET,AVUS / Domain,国外
+  - RULE-SET,AVSG / Domain,国外
   - RULE-SET,AVLW / Domain,国外
   - RULE-SET,Synology / Domain,直连
   - RULE-SET,Telegram / IP,国外
