@@ -1,0 +1,406 @@
+#
+# ==========================================================
+# ==== OpenClash 覆写模块配置 ====
+# ==========================================================
+#
+# 生成时间: 2026-06-10
+# 参考文档: https://wiki.metacubex.one/
+#
+
+# ==========================================================
+# ==== 基础配置 ====
+# ==========================================================
+
+# 核心类型: Meta (推荐，支持更多特性)
+CORE_TYPE = Meta
+
+# 配置文件路径 (需要替换为你的实际订阅地址或模板URL)
+# CONFIG_FILE = /etc/openclash/config/your-config.yaml
+
+# ==========================================================
+# ==== 代理与模式设置 ====
+# ==========================================================
+
+# 插件运行模式
+# fake-ip: 仅DNS欺骗
+# fake-ip-tun: DNS欺骗 + TUN增强
+# fake-ip-mix: DNS欺骗 + 混合模式 (推荐)
+# redir-host: 重定向主机
+# redir-host-tun: 重定向主机 + TUN增强
+# redir-host-mix: 重定向主机 + 混合模式
+EN_MODE = fake-ip-mix
+
+# 禁用UDP QUIC (减少连接问题)
+DISABLE_UDP_QUIC = 1
+
+# 路由器自身代理
+ROUTER_SELF_PROXY = 1
+
+# TUN网络栈类型: system / gvisor / mixed
+STACK_TYPE = gvisor
+
+# 代理模式: rule (推荐) / global / direct
+PROXY_MODE = rule
+
+# ==========================================================
+# ==== DNS 设置 ====
+# ==========================================================
+
+# DNS 重定向模式
+# 0: 禁用
+# 1: Dnsmasq Redirect (推荐)
+# 2: Firewall Redirect
+ENABLE_REDIRECT_DNS = 1
+
+# 自定义 DNS (使用插件内置规则)
+ENABLE_CUSTOM_DNS = 1
+
+# 自动追加 default-nameserver DNS
+APPEND_DEFAULT_DNS = 1
+
+# 追加上游分配 DNS
+APPEND_WAN_DNS = 0
+
+# 启用 fake-ip 缓存
+STORE_FAKEIP = 1
+
+# 启用 Fake-IP-Filter (使用插件内置规则)
+CUSTOM_FAKEIP_FILTER = 1
+CUSTOM_FAKEIP_FILTER_MODE = blacklist
+
+# 自定义 Fake-IP 地址段
+FAKEIP_RANGE = 198.18.0.1/16
+
+# DNS 查询遵循规则
+ENABLE_RESPECT_RULES = 1
+
+# 自定义 Nameserver-Policy
+CUSTOM_NAME_POLICY = 1
+
+# 自定义 Hosts
+CUSTOM_HOST = 1
+
+# 自定义 Fallback-Filter
+CUSTOM_FALLBACK_FILTER = 1
+
+# ==========================================================
+# ==== IPv6 设置 ====
+# ==========================================================
+
+# 禁用 IPv6
+IPV6_ENABLE = 0
+IPV6_DNS = 0
+CHINA_IP6_ROUTE = 0
+
+# ==========================================================
+# ==== 分流设置 ====
+# ==========================================================
+
+# IPv4 绕过大陆模式
+# 0: 禁用
+# 1: 绕过大陆 (推荐)
+# 2: 回国
+CHINA_IP_ROUTE = 1
+
+# 大陆IP自动更新
+CHNR_AUTO_UPDATE = 1
+CHNR_UPDATE_WEEK_TIME = *
+CHNR_UPDATE_DAY_TIME = 6
+
+# ==========================================================
+# ==== 域名嗅探 ====
+# ==========================================================
+
+# 启用域名嗅探
+ENABLE_META_SNIFFER = 1
+ENABLE_META_SNIFFER_CUSTOM = 1
+ENABLE_META_SNIFFER_PURE_IP = 1
+
+# ==========================================================
+# ==== TCP 并发与进程 ====
+# ==========================================================
+
+# 启用 TCP 并发
+ENABLE_TCP_CONCURRENT = 1
+
+# 进程查找模式: off / always / strict
+FIND_PROCESS_MODE = off
+
+# 启用统一延迟计算
+ENABLE_UNIFIED_DELAY = 1
+
+# ==========================================================
+# ==== 防火墙与访问控制 ====
+# ==========================================================
+
+# 仅允许内网访问
+INTRANET_ALLOWED = 1
+
+# 绕过常用端口
+COMMON_PORTS = 0
+
+# ==========================================================
+# ==== 测速设置 ====
+# ==========================================================
+
+# URL-Test 策略组切换灵敏度 (毫秒)
+TOLERANCE = 50
+
+# 测速间隔 (秒)
+URLTEST_INTERVAL_MOD = 300
+
+# 测速地址 (默认使用 Google)
+URLTEST_ADDRESS_MOD = 0
+
+# GitHub 地址修改 (使用镜像加速)
+GITHUB_ADDRESS_MOD = https://mirror.ghproxy.com/
+
+# ==========================================================
+# ==== Geo 数据库设置 ====
+# ==========================================================
+
+# Geo 数据加载模式: memconservative / standard
+GEODATA_LOADER = standard
+
+# GeoIP Dat 自动更新
+GEOIP_AUTO_UPDATE = 1
+GEOIP_UPDATE_WEEK_TIME = *
+GEOIP_UPDATE_DAY_TIME = 5
+
+# GeoSite 自动更新
+GEOSITE_AUTO_UPDATE = 1
+GEOSITE_UPDATE_WEEK_TIME = *
+GEOSITE_UPDATE_DAY_TIME = 5
+
+# ==========================================================
+# ==== 其他功能 ====
+# ==========================================================
+
+# 小闪存模式 (路由器存储空间不足时启用)
+SMALL_FLASH_MEMORY = 0
+
+# 禁用 QUIC GO GSO
+DISABLE_QUIC_GO_GSO = 1
+
+# 延时启动 (秒，0为禁用)
+DELAY_START = 0
+
+# 跳过代理地址
+SKIP_PROXY_ADDRESS = 1
+
+# 模块更新后重启插件
+RESTART = false
+
+# ==========================================================
+# ==== YAML 块覆写 ====
+# ==========================================================
+
+# 使用 [YAML] 标记开头进行 YAML 覆写
+# 以下为模板示例，根据需要取消注释并修改
+
+[YAML]
+
+# ----------------------------------------------------------
+# 1. 自定义 DNS 配置示例
+# ----------------------------------------------------------
+# dns:
+#   enable: true
+#   listen: 0.0.0.0:7874
+#   ipv6: false
+#   enhanced-mode: fake-ip
+#   fake-ip-range: 198.18.0.1/16
+#   fake-ip-filter:
+#     - '+.lan'
+#     - '+.local'
+#     - 'geosite:cn'
+#   nameserver:
+#     - 223.5.5.5
+#     - 119.29.29.29
+#   fallback:
+#     - 1.1.1.1
+#     - 8.8.8.8
+#   fallback-filter:
+#     geoip: true
+#     geoip-code: CN
+
+# ----------------------------------------------------------
+# 2. 添加自定义代理节点示例
+# ----------------------------------------------------------
+# proxies:
+#   - name: "自定义节点"
+#     type: ss
+#     server: example.com
+#     port: 8388
+#     cipher: aes-256-gcm
+#     password: your-password
+#     plugin: obfs
+#     plugin-opts:
+#       mode: tls
+#       host: example.com
+
+# proxy-groups:
+#   +proxies:
+#     - "自定义节点"
+
+# ----------------------------------------------------------
+# 3. 批量更新策略组节点示例
+# ----------------------------------------------------------
+# proxy-groups*:
+#   where:
+#     name: 香港-手动
+#   set:
+#     proxies:
+#       - '香港-自动'
+#       - '所有-手动'
+#       - '所有-自动'
+
+# ----------------------------------------------------------
+# 4. 添加自定义规则示例
+# ----------------------------------------------------------
+# +rules:
+#   - DOMAIN-SUFFIX,custom-domain.com,国外
+#   - DOMAIN-KEYWORD,keyword,国外
+#   - IP-CIDR,192.168.0.0/16,DIRECT
+
+# ----------------------------------------------------------
+# 5. 修改 Tun 配置示例
+# ----------------------------------------------------------
+# tun:
+#   enable: true
+#   stack: gvisor
+#   device: utun
+#   endpoint-independent-nat: true
+#   auto-route: true
+#   auto-detect-interface: true
+#   strict-route: true
+
+# ----------------------------------------------------------
+# 6. 修改代理端口示例
+# ----------------------------------------------------------
+# port: 7890
+# socks-port: 7891
+# redir-port: 7892
+# mixed-port: 7893
+# tproxy-port: 7895
+
+# ----------------------------------------------------------
+# 7. 修改日志级别
+# ----------------------------------------------------------
+# log-level: info  # silent / error / warning / info / debug
+
+# ----------------------------------------------------------
+# 8. 启用/禁用订阅信息显示
+# ----------------------------------------------------------
+# profile:
+#   store-selected: true
+#   store-fake-ip: true
+
+# ==========================================================
+# ==== 完整配置模板 ====
+# ==========================================================
+# 如需使用完整配置而非覆写模式，请参考以下模板结构
+# 并设置 CONFIG_FILE 指向你的配置文件
+
+# ========== 以下为完整 YAML 配置模板 ==========
+
+# # 端口设置
+# port: 7890
+# socks-port: 7891
+# redir-port: 7892
+# mixed-port: 7893
+# tproxy-port: 7895
+# allow-lan: true
+# mode: rule
+# log-level: info
+# external-controller: 0.0.0.0:9090
+# secret: "your-password"
+
+# # DNS 配置
+# dns:
+#   enable: true
+#   listen: 0.0.0.0:7874
+#   ipv6: false
+#   enhanced-mode: fake-ip
+#   fake-ip-range: 198.18.0.1/16
+#   fake-ip-filter:
+#     - +.lan
+#     - +.local
+#     - geosite:cn
+#   nameserver:
+#     - 223.5.5.5
+#     - 119.29.29.29
+
+# # Tun 配置
+# tun:
+#   enable: true
+#   stack: gvisor
+#   device: utun
+#   endpoint-independent-nat: true
+#   auto-route: false
+#   auto-detect-interface: false
+
+# # 策略组定义
+# proxy-groups:
+#   - name: 🔰 节点选择
+#     type: select
+#     proxies:
+#       - ♻️ 自动选择
+#       - 🎯 手动选择
+#       - DIRECT
+
+#   - name: ♻️ 自动选择
+#     type: url-test
+#     proxies: []
+#     tolerance: 50
+#     interval: 300
+
+#   - name: 🎯 手动选择
+#     type: select
+#     proxies: []
+
+#   - name: 🛡️ 广告拦截
+#     type: select
+#     proxies:
+#       - REJECT
+
+#   - name: 🌍 国外流量
+#     type: select
+#     proxies:
+#       - 🔰 节点选择
+
+#   - name: 🇨🇳 国内流量
+#     type: select
+#     proxies:
+#       - DIRECT
+
+# # 规则
+# rules:
+#   - RULE-SET,ads,🛡️ 广告拦截
+#   - RULE-SET,proxy,🌍 国外流量
+#   - RULE-SET,direct,🇨🇳 国内流量
+#   - MATCH,🔰 节点选择
+
+# # 规则集
+# rule-providers:
+#   ads:
+#     type: http
+#     behavior: domain
+#     url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/cdn.toml"
+#     path: ./ruleset/ads.yaml
+#     interval: 86400
+
+#   proxy:
+#     type: http
+#     behavior: domain
+#     url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.yaml"
+#     path: ./ruleset/proxy.yaml
+#     interval: 86400
+
+#   direct:
+#     type: http
+#     behavior: domain
+#     url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.yaml"
+#     path: ./ruleset/direct.yaml
+#     interval: 86400
+
+# ========== 配置模板结束 ==========
