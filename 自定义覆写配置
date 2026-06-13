@@ -1,0 +1,579 @@
+#
+# ==========================================================
+# ==== OpenClash 覆写模块配置 ====
+# ==========================================================
+#
+# 生成时间: 2026-06-10
+# 参考文档: https://wiki.metacubex.one/
+#
+
+# ==========================================================
+# ==== 基础配置 ====
+# ==========================================================
+
+# 核心类型: Meta (推荐，支持更多特性)
+CORE_TYPE = Meta
+
+# 配置文件路径 (需要替换为你的实际订阅地址或模板URL)
+# CONFIG_FILE = /etc/openclash/config/your-config.yaml
+
+# ==========================================================
+# ==== 代理与模式设置 ====
+# ==========================================================
+
+# 插件运行模式
+# fake-ip: 仅DNS欺骗
+# fake-ip-tun: DNS欺骗 + TUN增强
+# fake-ip-mix: DNS欺骗 + 混合模式 (推荐)
+# redir-host: 重定向主机
+# redir-host-tun: 重定向主机 + TUN增强
+# redir-host-mix: 重定向主机 + 混合模式
+EN_MODE = fake-ip-mix
+
+# 禁用UDP QUIC (减少连接问题)
+DISABLE_UDP_QUIC = 1
+
+# 路由器自身代理
+ROUTER_SELF_PROXY = 1
+
+# TUN网络栈类型: system / gvisor / mixed
+STACK_TYPE = gvisor
+
+# 代理模式: rule (推荐) / global / direct
+PROXY_MODE = rule
+
+# ==========================================================
+# ==== DNS 设置 ====
+# ==========================================================
+
+# DNS 重定向模式
+# 0: 禁用
+# 1: Dnsmasq Redirect (推荐)
+# 2: Firewall Redirect
+ENABLE_REDIRECT_DNS = 1
+
+# 自定义 DNS (使用插件内置规则)
+ENABLE_CUSTOM_DNS = 1
+
+# 自动追加 default-nameserver DNS
+APPEND_DEFAULT_DNS = 1
+
+# 追加上游分配 DNS
+APPEND_WAN_DNS = 0
+
+# 启用 fake-ip 缓存
+STORE_FAKEIP = 1
+
+# 启用 Fake-IP-Filter (使用插件内置规则)
+CUSTOM_FAKEIP_FILTER = 1
+CUSTOM_FAKEIP_FILTER_MODE = blacklist
+
+# 自定义 Fake-IP 地址段
+FAKEIP_RANGE = 198.18.0.1/16
+
+# DNS 查询遵循规则
+ENABLE_RESPECT_RULES = 1
+
+# 自定义 Nameserver-Policy
+CUSTOM_NAME_POLICY = 1
+
+# 自定义 Hosts
+CUSTOM_HOST = 1
+
+# 自定义 Fallback-Filter
+CUSTOM_FALLBACK_FILTER = 1
+
+# ==========================================================
+# ==== IPv6 设置 ====
+# ==========================================================
+
+# 禁用 IPv6
+IPV6_ENABLE = 0
+IPV6_DNS = 0
+CHINA_IP6_ROUTE = 0
+
+# ==========================================================
+# ==== 分流设置 ====
+# ==========================================================
+
+# IPv4 绕过大陆模式
+# 0: 禁用
+# 1: 绕过大陆 (推荐)
+# 2: 回国
+CHINA_IP_ROUTE = 1
+
+# 大陆IP自动更新
+CHNR_AUTO_UPDATE = 1
+CHNR_UPDATE_WEEK_TIME = *
+CHNR_UPDATE_DAY_TIME = 6
+
+# ==========================================================
+# ==== 域名嗅探 ====
+# ==========================================================
+
+# 启用域名嗅探
+ENABLE_META_SNIFFER = 1
+ENABLE_META_SNIFFER_CUSTOM = 1
+ENABLE_META_SNIFFER_PURE_IP = 1
+
+# ==========================================================
+# ==== TCP 并发与进程 ====
+# ==========================================================
+
+# 启用 TCP 并发
+ENABLE_TCP_CONCURRENT = 1
+
+# 进程查找模式: off / always / strict (strict: 精确匹配进程)
+FIND_PROCESS_MODE = strict
+
+# 启用统一延迟计算
+ENABLE_UNIFIED_DELAY = 1
+
+# ==========================================================
+# ==== 防火墙与访问控制 ====
+# ==========================================================
+
+# 仅允许内网访问
+INTRANET_ALLOWED = 1
+
+# 绕过常用端口
+COMMON_PORTS = 0
+
+# ==========================================================
+# ==== 测速设置 ====
+# ==========================================================
+
+# URL-Test 策略组切换灵敏度 (毫秒)
+TOLERANCE = 50
+
+# 测速间隔 (秒)
+URLTEST_INTERVAL_MOD = 300
+
+# 测速地址 (默认使用 Google)
+URLTEST_ADDRESS_MOD = 0
+
+# GitHub 地址修改 (使用镜像加速)
+GITHUB_ADDRESS_MOD = https://mirror.ghproxy.com/
+
+# ==========================================================
+# ==== Geo 数据库设置 ====
+# ==========================================================
+
+# Geo 数据加载模式: memconservative / standard
+GEODATA_LOADER = standard
+
+# GeoIP Dat 自动更新
+GEOIP_AUTO_UPDATE = 1
+GEOIP_UPDATE_WEEK_TIME = *
+GEOIP_UPDATE_DAY_TIME = 5
+
+# GeoSite 自动更新
+GEOSITE_AUTO_UPDATE = 1
+GEOSITE_UPDATE_WEEK_TIME = *
+GEOSITE_UPDATE_DAY_TIME = 5
+
+# ==========================================================
+# ==== 性能与监控 ====
+# ==========================================================
+
+# 小闪存模式 (路由器存储空间不足时启用)
+SMALL_FLASH_MEMORY = 0
+
+# 禁用 QUIC GO GSO
+DISABLE_QUIC_GO_GSO = 1
+
+# 延时启动 (秒，0为禁用)
+DELAY_START = 0
+
+# 跳过代理地址
+SKIP_PROXY_ADDRESS = 1
+
+# 模块更新后重启插件
+RESTART = false
+
+# ==========================================================
+# ==== YAML 块覆写 ====
+# ==========================================================
+
+[YAML]
+
+# ----------------------------------------------------------
+# 1. DNS 防泄露与 DNS 分流配置 (优化版)
+# ----------------------------------------------------------
+
+# DNS 服务器配置
+dns:
+  # 启用 DNS 服务
+  enable: true
+  
+  # DNS 监听地址
+  listen: 0.0.0.0:7874
+  
+  # IPv6 支持 (国内建议关闭)
+  ipv6: false
+  
+  # DNS 运行模式
+  # fake-ip: DNS欺骗，返回虚假IP (推荐)
+  # redir-host: 重定向模式，返回真实IP
+  enhanced-mode: fake-ip
+  
+  # Fake-IP 地址池
+  fake-ip-range: 198.18.0.1/16
+  
+  # Fake-IP 过滤器 (精简版)
+  # 使用 geosite 分类替代大量单独域名
+  fake-ip-filter-mode: blacklist
+  
+  fake-ip-filter:
+    # 局域网域名
+    - '+.lan'
+    - '+.local'
+    - '+.localhost'
+    
+    # 国内核心域名 (必须直连的)
+    - '+.cn'
+    - '+.baidu.com'
+    - '+.taobao.com'
+    - '+.alipay.com'
+    - '+.alicdn.com'
+    - '+.aliyuncs.com'
+    - '+.tmall.com'
+    
+    # 银行和支付 (安全优先)
+    - '+.icbc.com.cn'
+    - '+.ccb.com.cn'
+    - '+.boc.cn'
+    - '+.abchina.com'
+    - '+.cmbchina.com'
+    - '+.pingan.com'
+    
+    # geosite 分类 (推荐，减少维护成本)
+    - 'geosite:cn'
+    - 'geosite:private'
+    - 'geosite:category-games-cn'
+    - 'geosite:microsoft-cn'
+    - 'geosite:apple-cn'
+    - 'geosite:category-social-media-cn'
+    - 'geosite:category-ads-all'
+  
+  # 主 DNS 服务器 (国内 - 加密 DNS)
+  nameserver:
+    # 阿里 DNS DOH (加密)
+    - https://dns.alidns.com/dns-query
+    # 腾讯 DNS DOH (加密)
+    - https://doh.pub/dns-query
+    # 阿里 DNS DOT (加密)
+    - tls://dns.alidns.com
+  
+  # 备用 DNS 服务器 (海外 - 加密 DNS)
+  # 当国内 DNS 无法解析时使用
+  fallback:
+    # Google DNS DOH/DOT (加密)
+    - https://dns.google/dns-query
+    - tls://dns.google
+    # Cloudflare DNS DOH (加密)
+    - https://cloudflare-dns.com/dns-query
+    - tls://1.1.1.1
+  
+  # Fallback 过滤规则
+  # 当 fallback DNS 返回国内 IP 时，使用 nameserver 的结果
+  fallback-filter:
+    # 按地理位置过滤 (GeoIP)
+    geoip: true
+    geoip-code: CN
+    
+    # 按 IP 段过滤 (私有地址保留)
+    ipcidr:
+      - 240.0.0.0/4
+      - 0.0.0.0/8
+      - 10.0.0.0/8
+      - 127.0.0.0/8
+      - 169.254.0.0/16
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+    
+    # 域名过滤 (国内域名优先国内 DNS)
+    domain:
+      - '+.cn'
+      - '+.baidu.com'
+      - '+.taobao.com'
+  
+  # 域名服务器策略
+  # 为特定域名指定 DNS 服务器
+  nameserver-policy:
+    # 国内域名使用国内 DNS
+    '+.baidu.com': https://dns.alidns.com/dns-query
+    '+.qq.com': https://doh.pub/dns-query
+    '+.cn': https://dns.alidns.com/dns-query
+    '+.alibaba.com': https://dns.alidns.com/dns-query
+    '+.aliyun.com': https://dns.alidns.com/dns-query
+    '+.taobao.com': https://dns.alidns.com/dns-query
+    '+.jd.com': https://dns.alidns.com/dns-query
+    '+.bilibili.com': https://dns.alidns.com/dns-query
+    
+    # 特定域名使用 Google DNS
+    '+.cloudflare.com': https://dns.google/dns-query
+    '+.github.com': https://dns.google/dns-query
+    '+.google.com': https://dns.google/dns-query
+
+# ----------------------------------------------------------
+# 2. DNS 劫持/污染防护
+# ----------------------------------------------------------
+
+# Hosts 配置 - 防止 DNS 污染
+hosts:
+  # Google 服务
+  '+.google.com': 127.0.0.1
+  '+.google.com.hk': 127.0.0.1
+  '+.googleapis.com': 127.0.0.1
+  '+.googlevideo.com': 127.0.0.1
+  '+.youtube.com': 127.0.0.1
+  '+.ytimg.com': 127.0.0.1
+  
+  # GitHub
+  '+.github.com': 127.0.0.1
+  '+.githubusercontent.com': 127.0.0.1
+  '+.github.io': 127.0.0.1
+  
+  # 常见被污染域名
+  '+.twitter.com': 127.0.0.1
+  '+.facebook.com': 127.0.0.1
+  '+.instagram.com': 127.0.0.1
+  '+.telegram.org': 127.0.0.1
+
+# ----------------------------------------------------------
+# 3. 增强的 Tun 配置 (DNS 防泄露核心)
+# ----------------------------------------------------------
+
+tun:
+  enable: true
+  
+  # TUN 堆栈类型
+  # system: 系统原生堆栈，兼容性好
+  # gvisor: Google gVisor，性能更好 (推荐)
+  # mixed: 混合模式
+  stack: gvisor
+  
+  # TUN 设备名
+  device: utun
+  
+  # 独立于端点的 NAT
+  endpoint-independent-nat: true
+  
+  # 自动路由
+  # 启用后，所有流量都会经过 TUN 设备
+  auto-route: true
+  
+  # 自动检测出口接口
+  auto-detect-interface: true
+  
+  # 严格路由
+  # 防止 DNS 和流量泄露
+  strict-route: true
+  
+  # 强制绕过局域网
+  bypass-lan: false
+  
+  # MTU 设置 (优化值)
+  mtu: 9000
+  
+  # TCP 并发
+  enable-multi-endpoint: true
+  
+  # 规则优先
+  # 使用 Clash 规则决定流量走向
+  rule-based-route: true
+
+# ----------------------------------------------------------
+# 4. 游戏加速规则 (域名 + IP 双重匹配)
+# ----------------------------------------------------------
+
++rules:
+  # DNS 泄露测试
+  - DOMAIN-SUFFIX,dnsleaktest.com,DIRECT
+  - DOMAIN-SUFFIX,ipleak.net,DIRECT
+  - DOMAIN-SUFFIX,whatismyip.com,DIRECT
+  - DOMAIN-SUFFIX,ipify.org,DIRECT
+  - DOMAIN-SUFFIX,ip.sb,DIRECT
+  
+  # Steam 域名直连
+  - DOMAIN-SUFFIX,steampowered.com,DIRECT
+  - DOMAIN-SUFFIX,steamcontent.com,DIRECT
+  - DOMAIN-SUFFIX,steamstatic.com,DIRECT
+  - DOMAIN-SUFFIX,steamcommunity.com,DIRECT
+  - DOMAIN-SUFFIX,cm.steampowered.com,DIRECT
+  - DOMAIN-SUFFIX,valve.com,DIRECT
+  - DOMAIN-SUFFIX,valvesoftware.com,DIRECT
+  
+  # Steam CDN IP 段 (游戏加速)
+  - IP-CIDR,23.160.0.0/24,DIRECT
+  - IP-CIDR,45.142.0.0/16,DIRECT
+  - IP-CIDR,103.10.124.0/24,DIRECT
+  - IP-CIDR,155.133.0.0/16,DIRECT
+  - IP-CIDR,162.254.0.0/16,DIRECT
+  - IP-CIDR,205.196.0.0/16,DIRECT
+  
+  # Nintendo 域名直连
+  - DOMAIN-SUFFIX,nintendo.net,DIRECT
+  - DOMAIN-SUFFIX,nintendo.com,DIRECT
+  - DOMAIN-SUFFIX,nicovideo.jp,DIRECT
+  
+  # Nintendo IP 段
+  - IP-CIDR,34.96.0.0/14,DIRECT
+  - IP-CIDR,104.107.0.0/16,DIRECT
+  - IP-CIDR,110.45.0.0/16,DIRECT
+  
+  # PlayStation 域名直连
+  - DOMAIN-SUFFIX,playstation.net,DIRECT
+  - DOMAIN-SUFFIX,sony.com,DIRECT
+  - DOMAIN-SUFFIX,sonyentertainmentnetwork.com,DIRECT
+  
+  # PlayStation IP 段
+  - IP-CIDR,63.245.0.0/16,DIRECT
+  - IP-CIDR,198.160.0.0/16,DIRECT
+  
+  # 国内游戏直连
+  - DOMAIN-SUFFIX,mihoyo.com,DIRECT
+  - DOMAIN-SUFFIX,hoyoverse.com,DIRECT
+  - DOMAIN-SUFFIX,bh3.com,DIRECT
+  - DOMAIN-SUFFIX,hsr.com,DIRECT
+  - DOMAIN-SUFFIX,zzz.com,DIRECT
+  - DOMAIN-SUFFIX,miyoushe.com,DIRECT
+  
+  # Epic Games 域名直连
+  - DOMAIN-SUFFIX,epicgames.com,DIRECT
+  - DOMAIN-SUFFIX,epicusercontent.com,DIRECT
+  - DOMAIN-SUFFIX,unrealengine.com,DIRECT
+  
+  # Synology 群晖 NAS 直连
+  - DOMAIN-SUFFIX,synology.com,DIRECT
+  - DOMAIN-SUFFIX,synology.me,DIRECT
+  - DOMAIN-SUFFIX,synology.local,DIRECT
+  - DOMAIN-SUFFIX,synobackup.com,DIRECT
+  - DOMAIN-SUFFIX,synology.co,DIRECT
+  - DOMAIN-SUFFIX,synology.net,DIRECT
+  - DOMAIN-KEYWORD,synology,DIRECT
+  - DOMAIN-KEYWORD,quickconnect,DIRECT
+  - DOMAIN-KEYWORD,dsm,DIRECT
+  
+  # Synology 常见服务端口直连 (局域网IP段)
+  - IP-CIDR,192.168.0.0/16,DIRECT
+  - IP-CIDR,172.16.0.0/12,DIRECT
+  - IP-CIDR,10.0.0.0/8,DIRECT
+  - IP-CIDR,127.0.0.0/8,DIRECT
+
+# ----------------------------------------------------------
+# 5. 国内常用服务直连
+# ----------------------------------------------------------
+
++rules:
+  # 微信
+  - DOMAIN-SUFFIX,weixin.qq.com,DIRECT
+  - DOMAIN-SUFFIX,wechat.com,DIRECT
+  - DOMAIN-KEYWORD,wechat,DIRECT
+  
+  # 钉钉
+  - DOMAIN-SUFFIX,dingtalk.com,DIRECT
+  - DOMAIN-SUFFIX,dingtalk.org,DIRECT
+  - DOMAIN-SUFFIX,aliyun.com,DIRECT
+  - DOMAIN-SUFFIX,alibaba.com,DIRECT
+  - DOMAIN-KEYWORD,dingtalk,DIRECT
+  
+  # 飞书
+  - DOMAIN-SUFFIX,feishu.cn,DIRECT
+  - DOMAIN-SUFFIX,larksuite.com,DIRECT
+  - DOMAIN-SUFFIX,bytedance.com,DIRECT
+  - DOMAIN-SUFFIX,byted.org,DIRECT
+  - DOMAIN-KEYWORD,feishu,DIRECT
+  
+  # 企业微信
+  - DOMAIN-SUFFIX,wwork.cn,DIRECT
+  - DOMAIN-SUFFIX,work.weixin.qq.com,DIRECT
+  
+  # 腾讯云/阿里云
+  - DOMAIN-SUFFIX,qcloud.com,DIRECT
+  - DOMAIN-SUFFIX,tencent.com,DIRECT
+  - DOMAIN-SUFFIX,aliyuncs.com,DIRECT
+  
+  # 华为
+  - DOMAIN-SUFFIX,huawei.com,DIRECT
+  - DOMAIN-SUFFIX,hwcloud.com,DIRECT
+  - DOMAIN-SUFFIX,harmonyos.com,DIRECT
+
+# ----------------------------------------------------------
+# 6. 国内 CDN 与安全直连
+# ----------------------------------------------------------
+
++rules:
+  # 国内 CDN 排除 (避免回源到境外)
+  - DOMAIN-KEYWORD,chinacache,DIRECT
+  - DOMAIN-KEYWORD,wangsu,DIRECT
+  - DOMAIN-KEYWORD,cdnbest,DIRECT
+  - DOMAIN-KEYWORD,51cdn,DIRECT
+  
+  # 政府网站
+  - DOMAIN-SUFFIX,gov.cn,DIRECT
+  - DOMAIN-SUFFIX,12306.cn,DIRECT
+  - DOMAIN-SUFFIX,nmc.cn,DIRECT
+  
+  # 银行
+  - DOMAIN-SUFFIX,icbc.com,DIRECT
+  - DOMAIN-SUFFIX,ccb.com,DIRECT
+  - DOMAIN-SUFFIX,boc.cn,DIRECT
+  - DOMAIN-SUFFIX,abc.cn,DIRECT
+  - DOMAIN-SUFFIX,cmbchina.com,DIRECT
+
+# ----------------------------------------------------------
+# 7. Netflix 等流媒体 DNS 处理
+# ----------------------------------------------------------
+
++rules:
+  # Netflix DNS 预解析
+  - DOMAIN-KEYWORD,netflix,Netflix
+  - DOMAIN-KEYWORD,nflxvideo,Netflix
+  - DOMAIN-KEYWORD,nflximg,Netflix
+
+  # Disney+ DNS 处理
+  - DOMAIN-KEYWORD,disney,Disney
+  - DOMAIN-KEYWORD,dssott,Disney
+
+  # YouTube DNS 处理
+  - DOMAIN-KEYWORD,youtube,YouTube
+  - DOMAIN-KEYWORD,googlevideo,YouTube
+  - DOMAIN-KEYWORD,ytimg,YouTube
+
+# ==========================================================
+# ==== DNS 问题排查指南 ====
+# ==========================================================
+
+# Q: 如何测试 DNS 是否泄露？
+# A: 访问以下网站，检查显示的 DNS 服务器位置：
+#    - https://dnsleaktest.com
+#    - https://ipleak.net
+#    - https://whatismyip.com
+#
+#    如果显示为国内 DNS (如 223.5.5.5)，说明 DNS 配置正确
+#    如果显示为境外 DNS，说明可能有泄露
+
+# Q: 如何判断 DNS 分流是否生效？
+# A: 在终端执行以下命令：
+#    nslookup google.com
+#    # 应该返回境外 IP
+#
+#    nslookup baidu.com
+#    # 应该返回国内 IP (如 110.242.68.66)
+
+# Q: 为什么部分域名还是被代理了？
+# A: 检查 fake-ip-filter 是否包含该域名
+#    可以添加新的域名到 fake-ip-filter 列表中
+
+# ==========================================================
+# ==== 性能优化建议 ====
+# ==========================================================
+
+# 1. 已启用加密 DNS (DOH/DOT)
+# 2. 已启用进程级代理控制 (FIND_PROCESS_MODE = strict)
+# 3. 已添加游戏平台 IP 段加速
+# 4. 已添加国内常用服务直连 (微信、钉钉、飞书等)
+# 5. 已添加国内 CDN 排除规则
+# 6. 已添加政府网站和银行直连
