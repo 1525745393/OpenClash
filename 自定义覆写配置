@@ -42,9 +42,6 @@ STACK_TYPE = gvisor
 # 代理模式: rule (推荐) / global / direct
 PROXY_MODE = rule
 
-# 启用 TCP Fast Open (提升连接速度)
-ENABLE_TCP_FAST_OPEN = 1
-
 # ==========================================================
 # ==== DNS 设置 ====
 # ==========================================================
@@ -190,12 +187,6 @@ DELAY_START = 0
 
 # 跳过代理地址
 SKIP_PROXY_ADDRESS = 1
-
-# 最大连接数 (根据路由器性能调整)
-MAX_CONN = 2048
-
-# 启用流量统计
-ENABLE_TRAFFIC_STATS = 1
 
 # 模块更新后重启插件
 RESTART = false
@@ -504,6 +495,5 @@ tun:
 
 # 1. 定期清理 fake-ip-filter 中不需要的域名
 # 2. 已启用加密 DNS (DOH/DOT)
-# 3. 已启用 TCP Fast Open
-# 4. 已启用进程级代理控制
-# 5. 已添加游戏平台 IP 段加速
+# 3. 已启用进程级代理控制 (FIND_PROCESS_MODE = strict)
+# 4. 已添加游戏平台 IP 段加速
