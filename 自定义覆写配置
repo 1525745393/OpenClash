@@ -444,6 +444,23 @@ tun:
   - DOMAIN-SUFFIX,epicgames.com,DIRECT
   - DOMAIN-SUFFIX,epicusercontent.com,DIRECT
   - DOMAIN-SUFFIX,unrealengine.com,DIRECT
+  
+  # Synology 群晖 NAS 直连
+  - DOMAIN-SUFFIX,synology.com,DIRECT
+  - DOMAIN-SUFFIX,synology.me,DIRECT
+  - DOMAIN-SUFFIX,synology.local,DIRECT
+  - DOMAIN-SUFFIX,synobackup.com,DIRECT
+  - DOMAIN-SUFFIX,synology.co,DIRECT
+  - DOMAIN-SUFFIX,synology.net,DIRECT
+  - DOMAIN-KEYWORD,synology,DIRECT
+  - DOMAIN-KEYWORD,quickconnect,DIRECT
+  - DOMAIN-KEYWORD,dsm,DIRECT
+  
+  # Synology 常见服务端口直连 (局域网IP段)
+  - IP-CIDR,192.168.0.0/16,DIRECT
+  - IP-CIDR,172.16.0.0/12,DIRECT
+  - IP-CIDR,10.0.0.0/8,DIRECT
+  - IP-CIDR,127.0.0.0/8,DIRECT
 
 # ----------------------------------------------------------
 # 5. Netflix 等流媒体 DNS 处理
