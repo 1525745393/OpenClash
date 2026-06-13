@@ -10,34 +10,34 @@
 # ==== [General] 插件设置 ====
 # ==========================================================
 
-# DNS 重定向模式
+# DNS 重定向模式（透明代理核心）
 # 0: 禁用
-# 1: Dnsmasq Redirect (推荐路由器)
+# 1: Dnsmasq Redirect（路由器推荐）
 # 2: Firewall Redirect
 ENABLE_REDIRECT_DNS = 1
 
-# 启用自定义 DNS
+# 启用自定义 DNS（透明代理中 Clash DNS 接管所有解析）
 ENABLE_CUSTOM_DNS = 1
 
 # Fake-IP 过滤模式
-# blacklist: 黑名单模式 (推荐)
+# blacklist: 黑名单模式（推荐，透明代理必须启用）
 # whitelist: 白名单模式
 CUSTOM_FAKEIP_FILTER = 1
 CUSTOM_FAKEIP_FILTER_MODE = blacklist
 
-# 自定义 Fake-IP 地址段
+# 自定义 Fake-IP 地址段（透明代理中与 TUN 配合）
 FAKEIP_RANGE = 198.18.0.1/16
 
-# DNS 遵循规则
+# DNS 遵循规则（透明代理中必须启用）
 ENABLE_RESPECT_RULES = 1
 
-# 自定义 Nameserver-Policy
+# 自定义 Nameserver-Policy（透明代理中启用，精细化分流）
 CUSTOM_NAME_POLICY = 1
 
-# 自定义 Hosts
-CUSTOM_HOST = 1
+# 自定义 Hosts（透明代理中无需，DNS 已由 Clash 接管）
+CUSTOM_HOST = 0
 
-# 自定义 Fallback-Filter
+# 自定义 Fallback-Filter（透明代理中必须启用）
 CUSTOM_FALLBACK_FILTER = 1
 
 # ==========================================================
@@ -302,8 +302,8 @@ tun:
   # 强制绕过局域网
   bypass-lan: false
   
-  # MTU 设置
-  mtu: 9000
+  # MTU 设置（透明代理推荐 1500，与路由器网络一致）
+  mtu: 1500
   
   # TCP 并发
   enable-multi-endpoint: true
