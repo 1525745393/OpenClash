@@ -195,108 +195,351 @@ RESTART = false
 # ==== YAML 块覆写 ====
 # ==========================================================
 
-# 使用 [YAML] 标记开头进行 YAML 覆写
-# 以下为模板示例，根据需要取消注释并修改
-
 [YAML]
 
 # ----------------------------------------------------------
-# 1. 自定义 DNS 配置示例
+# 1. DNS 防泄露与 DNS 分流配置
 # ----------------------------------------------------------
-# dns:
-#   enable: true
-#   listen: 0.0.0.0:7874
-#   ipv6: false
-#   enhanced-mode: fake-ip
-#   fake-ip-range: 198.18.0.1/16
-#   fake-ip-filter:
-#     - '+.lan'
-#     - '+.local'
-#     - 'geosite:cn'
-#   nameserver:
-#     - 223.5.5.5
-#     - 119.29.29.29
-#   fallback:
-#     - 1.1.1.1
-#     - 8.8.8.8
-#   fallback-filter:
-#     geoip: true
-#     geoip-code: CN
+
+# DNS 服务器配置
+dns:
+  # 启用 DNS 服务
+  enable: true
+  
+  # DNS 监听地址
+  listen: 0.0.0.0:7874
+  
+  # IPv6 支持 (国内建议关闭)
+  ipv6: false
+  
+  # DNS 运行模式
+  # fake-ip: DNS欺骗，返回虚假IP (推荐)
+  # redir-host: 重定向模式，返回真实IP
+  enhanced-mode: fake-ip
+  
+  # Fake-IP 地址池
+  fake-ip-range: 198.18.0.1/16
+  
+  # Fake-IP 过滤器 (黑名单模式)
+  # 匹配的域名不使用 Fake-IP，直接解析
+  fake-ip-filter-mode: blacklist
+  
+  fake-ip-filter:
+    # 局域网域名
+    - '+.lan'
+    - '+.local'
+    - '+.localhost'
+    
+    # 国内常见域名
+    - '+.cn'
+    - '+.baidu.com'
+    - '+.qq.com'
+    - '+.taobao.com'
+    - '+.jd.com'
+    - '+.alipay.com'
+    - '+.tmall.com'
+    - '+.163.com'
+    - '+.126.com'
+    - '+.sina.com'
+    - '+.weibo.com'
+    - '+.bilibili.com'
+    - '+.douyin.com'
+    - '+.toutiao.com'
+    - '+.zhihu.com'
+    - '+.csdn.net'
+    - '+.gitee.com'
+    - '+.oschina.net'
+    
+    # 国内银行和支付
+    - '+.icbc.com.cn'
+    - '+.ccb.com.cn'
+    - '+.boc.cn'
+    - '+.abchina.com'
+    - '+.cmbchina.com'
+    - '+.pingan.com'
+    
+    # 路由器管理界面
+    - '+.router'
+    - '+.gateway'
+    - '+.miwifi.com'
+    - '+.phicomm.com'
+    - '+.tplinkrouter.com'
+    - '+.netkeeper.com'
+    
+    # 国内云服务
+    - '+.aliyun.com'
+    - '+.aliyuncs.com'
+    - '+.taodns.net'
+    - '+.qingcloud.com'
+    - '+.qiniu.com'
+    - '+.bcebos.com'
+    
+    # 防泄露测试域名
+    - '+.ipify.org'
+    - '+.ip.sb'
+    - '+.myip.la'
+    - '+.checkip.amazonaws.com'
+    - '+.ipinfo.io'
+    
+    # Steam 相关 (国内直连)
+    - '+.steampowered.com'
+    - '+.steamcontent.com'
+    - '+.steamstatic.com'
+    - '+.steamcommunity.com'
+    - '+.cm.steampowered.com'
+    
+    # Nintendo
+    - '+.nintendo.net'
+    - '+.nintendo.com'
+    
+    # PlayStation
+    - '+.playstation.net'
+    - '+.sony.com'
+    - '+.sonyentertainmentnetwork.com'
+    
+    # 游戏平台
+    - '+.battle.net'
+    - '+.blizzard.com'
+    - '+.epicgames.com'
+    - '+.ubisoft.com'
+    - '+.riotgames.com'
+    - '+.mihoyo.com'
+    - '+.hoyoverse.com'
+    - '+.bh3.com'
+    
+    # 国内视频
+    - '+.youku.com'
+    - '+.iqiyi.com'
+    - '+.qq.com'
+    - '+.bilibili.com'
+    - '+.douyu.com'
+    - '+.huya.com'
+    - '+.cc.com'
+    
+    # 国内音乐
+    - '+.music.163.com'
+    - '+.y.qq.com'
+    - '+.kugou.com'
+    - '+.kuwo.cn'
+    - '+.xiami.com'
+    
+    # 导航和地图
+    - '+.amap.com'
+    - '+.map.qq.com'
+    - '+.map.baidu.com'
+    - '+.ditu.google.com'
+    
+    # 防止 DNS 泄露的测试域名
+    - '+.dnsleaktest.com'
+    - '+.dnsleak.com'
+    - '+.whatismyip.com'
+    - '+.ipaddress.com'
+    - '+.browserleaks.com'
+    - '+.ipleak.net'
+    - '+.dns.google'
+    
+    # geosite 分类
+    - 'geosite:cn'
+    - 'geosite:private'
+    - 'geosite:category-games-cn'
+    - 'geosite:microsoft-cn'
+    - 'geosite:apple-cn'
+    - 'geosite:category-social-media-cn'
+    - 'geosite:category-ads-all'
+  
+  # 主 DNS 服务器 (国内)
+  nameserver:
+    # 阿里 DNS
+    - 223.5.5.5
+    # 腾讯 DNS
+    - 119.29.29.29
+    # 114 DNS
+    - 114.114.114.114
+  
+  # 备用 DNS 服务器 (海外)
+  # 当国内 DNS 无法解析时使用
+  fallback:
+    # Google DNS
+    - 8.8.8.8
+    - 8.8.4.4
+    # Cloudflare DNS
+    - 1.1.1.1
+    - 1.0.0.1
+  
+  # Fallback 过滤规则
+  # 当 fallback DNS 返回以下 IP 段时，使用 nameserver 的结果
+  fallback-filter:
+    # 按地理位置过滤 (GeoIP)
+    geoip: true
+    geoip-code: CN
+    
+    # 按 IP 段过滤
+    ipcidr:
+      # 国内 IP 段
+      - 240.0.0.0/4
+      - 0.0.0.0/8
+      - 10.0.0.0/8
+      - 127.0.0.0/8
+      - 169.254.0.0/16
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+    
+    # 域名过滤
+    domain:
+      # 国内域名使用 nameserver
+      - '+.cn'
+      - '+.baidu.com'
+      - '+.taobao.com'
+  
+  # 域名服务器策略
+  # 为特定域名指定 DNS 服务器
+  nameserver-policy:
+    # 国内域名使用国内 DNS
+    '+.baidu.com': 223.5.5.5
+    '+.qq.com': 119.29.29.29
+    '+.cn': 223.5.5.5
+    '+.alibaba.com': 223.5.5.5
+    '+.aliyun.com': 223.5.5.5
+    '+.taobao.com': 223.5.5.5
+    '+.jd.com': 223.5.5.5
+    '+.163.com': 119.29.29.29
+    '+.126.com': 119.29.29.29
+    '+.music.163.com': 119.29.29.29
+    '+.bilibili.com': 223.5.5.5
+    
+    # 特定域名使用 Google DNS
+    '+.cloudflare.com': 8.8.8.8
+    '+.github.com': 8.8.8.8
+    '+.google.com': 8.8.8.8
 
 # ----------------------------------------------------------
-# 2. 添加自定义代理节点示例
+# 2. DNS 劫持/污染防护
 # ----------------------------------------------------------
-# proxies:
-#   - name: "自定义节点"
-#     type: ss
-#     server: example.com
-#     port: 8388
-#     cipher: aes-256-gcm
-#     password: your-password
-#     plugin: obfs
-#     plugin-opts:
-#       mode: tls
-#       host: example.com
 
-# proxy-groups:
-#   +proxies:
-#     - "自定义节点"
-
-# ----------------------------------------------------------
-# 3. 批量更新策略组节点示例
-# ----------------------------------------------------------
-# proxy-groups*:
-#   where:
-#     name: 香港-手动
-#   set:
-#     proxies:
-#       - '香港-自动'
-#       - '所有-手动'
-#       - '所有-自动'
+# Hosts 配置 - 防止 DNS 污染
+hosts:
+  # Google 服务
+  '+.google.com': 127.0.0.1
+  '+.google.com.hk': 127.0.0.1
+  '+.googleapis.com': 127.0.0.1
+  '+.googlevideo.com': 127.0.0.1
+  '+.youtube.com': 127.0.0.1
+  '+.ytimg.com': 127.0.0.1
+  
+  # GitHub
+  '+.github.com': 127.0.0.1
+  '+.githubusercontent.com': 127.0.0.1
+  '+.github.io': 127.0.0.1
+  
+  # 常见被污染域名
+  '+.twitter.com': 127.0.0.1
+  '+.facebook.com': 127.0.0.1
+  '+.instagram.com': 127.0.0.1
+  '+.telegram.org': 127.0.0.1
 
 # ----------------------------------------------------------
-# 4. 添加自定义规则示例
+# 3. 增强的 Tun 配置 (DNS 防泄露核心)
 # ----------------------------------------------------------
-# +rules:
-#   - DOMAIN-SUFFIX,custom-domain.com,国外
-#   - DOMAIN-KEYWORD,keyword,国外
-#   - IP-CIDR,192.168.0.0/16,DIRECT
+
+tun:
+  enable: true
+  
+  # TUN 堆栈类型
+  # system: 系统原生堆栈，兼容性好
+  # gvisor: Google gVisor，性能更好 (推荐)
+  # mixed: 混合模式
+  stack: gvisor
+  
+  # TUN 设备名
+  device: utun
+  
+  # 独立于端点的 NAT
+  endpoint-independent-nat: true
+  
+  # 自动路由
+  # 启用后，所有流量都会经过 TUN 设备
+  auto-route: true
+  
+  # 自动检测出口接口
+  auto-detect-interface: true
+  
+  # 严格路由
+  # 防止 DNS 和流量泄露
+  strict-route: true
+  
+  # 强制绕过局域网
+  bypass-lan: false
+  
+  # MTU 设置
+  mtu: 9000
+  
+  # TCP 并发
+  enable-multi-endpoint: true
+  
+  # 规则优先
+  # 使用 Clash 规则决定流量走向
+  rule-based-route: true
 
 # ----------------------------------------------------------
-# 5. 修改 Tun 配置示例
+# 4. DNS 泄露测试 + 游戏平台直连规则
 # ----------------------------------------------------------
-# tun:
-#   enable: true
-#   stack: gvisor
-#   device: utun
-#   endpoint-independent-nat: true
-#   auto-route: true
-#   auto-detect-interface: true
-#   strict-route: true
+
+# DNS 泄露测试规则
++rules:
+  # DNS 泄露测试
+  - DOMAIN-SUFFIX,dnsleaktest.com,DIRECT
+  - DOMAIN-SUFFIX,ipleak.net,DIRECT
+  - DOMAIN-SUFFIX,whatismyip.com,DIRECT
+  - DOMAIN-SUFFIX,ipify.org,DIRECT
+  - DOMAIN-SUFFIX,ip.sb,DIRECT
+  
+  # Steam 域名直连
+  - DOMAIN-SUFFIX,steampowered.com,DIRECT
+  - DOMAIN-SUFFIX,steamcontent.com,DIRECT
+  - DOMAIN-SUFFIX,steamstatic.com,DIRECT
+  - DOMAIN-SUFFIX,steamcommunity.com,DIRECT
+  - DOMAIN-SUFFIX,cm.steampowered.com,DIRECT
+  - DOMAIN-SUFFIX,valve.com,DIRECT
+  - DOMAIN-SUFFIX,valvesoftware.com,DIRECT
+  
+  # Nintendo 域名直连
+  - DOMAIN-SUFFIX,nintendo.net,DIRECT
+  - DOMAIN-SUFFIX,nintendo.com,DIRECT
+  - DOMAIN-SUFFIX,nicovideo.jp,DIRECT
+  
+  # PlayStation 域名直连
+  - DOMAIN-SUFFIX,playstation.net,DIRECT
+  - DOMAIN-SUFFIX,sony.com,DIRECT
+  - DOMAIN-SUFFIX,sonyentertainmentnetwork.com,DIRECT
+  
+  # 国内游戏直连
+  - DOMAIN-SUFFIX,mihoyo.com,DIRECT
+  - DOMAIN-SUFFIX,hoyoverse.com,DIRECT
+  - DOMAIN-SUFFIX,bh3.com,DIRECT
+  - DOMAIN-SUFFIX,hsr.com,DIRECT
+  - DOMAIN-SUFFIX,zzz.com,DIRECT
 
 # ----------------------------------------------------------
-# 6. 修改代理端口示例
+# 5. Netflix 等流媒体 DNS 处理
 # ----------------------------------------------------------
-# port: 7890
-# socks-port: 7891
-# redir-port: 7892
-# mixed-port: 7893
-# tproxy-port: 7895
 
-# ----------------------------------------------------------
-# 7. 修改日志级别
-# ----------------------------------------------------------
-# log-level: info  # silent / error / warning / info / debug
-
-# ----------------------------------------------------------
-# 8. 启用/禁用订阅信息显示
-# ----------------------------------------------------------
-# profile:
-#   store-selected: true
-#   store-fake-ip: true
+# Netflix DNS 预解析
++rules:
+  - DOMAIN-KEYWORD,netflix,Netflix
+  - DOMAIN-KEYWORD,nflxvideo,Netflix
+  - DOMAIN-KEYWORD,nflximg,Netflix
+  
+  # Disney+ DNS 处理
+  - DOMAIN-KEYWORD,disney,Disney
+  - DOMAIN-KEYWORD,dssott,Disney
+  
+  # YouTube DNS 处理
+  - DOMAIN-KEYWORD,youtube,YouTube
+  - DOMAIN-KEYWORD,googlevideo,YouTube
+  - DOMAIN-KEYWORD,ytimg,YouTube
 
 # ==========================================================
-# ==== 完整配置模板 ====
+# ==== 完整配置模板 (可选) ====
 # ==========================================================
 # 如需使用完整配置而非覆写模式，请参考以下模板结构
 # 并设置 CONFIG_FILE 指向你的配置文件
@@ -315,29 +558,9 @@ RESTART = false
 # external-controller: 0.0.0.0:9090
 # secret: "your-password"
 
-# # DNS 配置
-# dns:
-#   enable: true
-#   listen: 0.0.0.0:7874
-#   ipv6: false
-#   enhanced-mode: fake-ip
-#   fake-ip-range: 198.18.0.1/16
-#   fake-ip-filter:
-#     - +.lan
-#     - +.local
-#     - geosite:cn
-#   nameserver:
-#     - 223.5.5.5
-#     - 119.29.29.29
+# # DNS 配置 (已在上方 [YAML] 块中配置)
 
-# # Tun 配置
-# tun:
-#   enable: true
-#   stack: gvisor
-#   device: utun
-#   endpoint-independent-nat: true
-#   auto-route: false
-#   auto-detect-interface: false
+# # Tun 配置 (已在上方 [YAML] 块中配置)
 
 # # 策略组定义
 # proxy-groups:
@@ -404,3 +627,40 @@ RESTART = false
 #     interval: 86400
 
 # ========== 配置模板结束 ==========
+
+# ==========================================================
+# ==== DNS 问题排查指南 ====
+# ==========================================================
+
+# Q: 如何测试 DNS 是否泄露？
+# A: 访问以下网站，检查显示的 DNS 服务器位置：
+#    - https://dnsleaktest.com
+#    - https://ipleak.net
+#    - https://whatismyip.com
+#
+#    如果显示为国内 DNS (如 223.5.5.5)，说明 DNS 配置正确
+#    如果显示为境外 DNS，说明可能有泄露
+
+# Q: 如何判断 DNS 分流是否生效？
+# A: 在终端执行以下命令：
+#    nslookup google.com
+#    # 应该返回境外 IP
+#    
+#    nslookup baidu.com
+#    # 应该返回国内 IP (如 110.242.68.66)
+
+# Q: 为什么部分域名还是被代理了？
+# A: 检查 fake-ip-filter 是否包含该域名
+#    可以添加新的域名到 fake-ip-filter 列表中
+
+# ==========================================================
+# ==== 性能优化建议 ====
+# ==========================================================
+
+# 1. 定期清理 fake-ip-filter 中不需要的域名
+# 2. 国内 DNS 使用 DOH/DOT 加密
+#    - 阿里 DNS: https://dns.alidns.com/dns-query
+#    - 腾讯 DNS: https://doh.pub/dns-query
+# 3. 海外 DNS 使用 DOH/DOT 加密
+#    - Google: https://dns.google/dns-query
+#    - Cloudflare: https://cloudflare-dns.com/dns-query
