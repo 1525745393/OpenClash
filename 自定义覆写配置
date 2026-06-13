@@ -463,7 +463,68 @@ tun:
   - IP-CIDR,127.0.0.0/8,DIRECT
 
 # ----------------------------------------------------------
-# 5. Netflix 等流媒体 DNS 处理
+# 5. 国内常用服务直连
+# ----------------------------------------------------------
+
++rules:
+  # 微信
+  - DOMAIN-SUFFIX,weixin.qq.com,DIRECT
+  - DOMAIN-SUFFIX,wechat.com,DIRECT
+  - DOMAIN-KEYWORD,wechat,DIRECT
+  
+  # 钉钉
+  - DOMAIN-SUFFIX,dingtalk.com,DIRECT
+  - DOMAIN-SUFFIX,dingtalk.org,DIRECT
+  - DOMAIN-SUFFIX,aliyun.com,DIRECT
+  - DOMAIN-SUFFIX,alibaba.com,DIRECT
+  - DOMAIN-KEYWORD,dingtalk,DIRECT
+  
+  # 飞书
+  - DOMAIN-SUFFIX,feishu.cn,DIRECT
+  - DOMAIN-SUFFIX,larksuite.com,DIRECT
+  - DOMAIN-SUFFIX,bytedance.com,DIRECT
+  - DOMAIN-SUFFIX,byted.org,DIRECT
+  - DOMAIN-KEYWORD,feishu,DIRECT
+  
+  # 企业微信
+  - DOMAIN-SUFFIX,wwork.cn,DIRECT
+  - DOMAIN-SUFFIX,work.weixin.qq.com,DIRECT
+  
+  # 腾讯云/阿里云
+  - DOMAIN-SUFFIX,qcloud.com,DIRECT
+  - DOMAIN-SUFFIX,tencent.com,DIRECT
+  - DOMAIN-SUFFIX,aliyuncs.com,DIRECT
+  
+  # 华为
+  - DOMAIN-SUFFIX,huawei.com,DIRECT
+  - DOMAIN-SUFFIX,hwcloud.com,DIRECT
+  - DOMAIN-SUFFIX,harmonyos.com,DIRECT
+
+# ----------------------------------------------------------
+# 6. 国内 CDN 与安全直连
+# ----------------------------------------------------------
+
++rules:
+  # 国内 CDN 排除 (避免回源到境外)
+  - DOMAIN-KEYWORD,chinacache,DIRECT
+  - DOMAIN-KEYWORD,wangsu,DIRECT
+  - DOMAIN-KEYWORD,cdnbest,DIRECT
+  - DOMAIN-KEYWORD,51cdn,DIRECT
+  
+  # 政府网站
+  - DOMAIN-SUFFIX,gov.cn,DIRECT
+  - DOMAIN-SUFFIX,12306.cn,DIRECT
+  - DOMAIN-SUFFIX,nmc.cn,DIRECT
+  
+  # 银行
+  - DOMAIN-SUFFIX,icbc.com,DIRECT
+  - DOMAIN-SUFFIX,ccb.com,DIRECT
+  - DOMAIN-SUFFIX,boc.cn,DIRECT
+  - DOMAIN-SUFFIX,abc.cn,DIRECT
+  - DOMAIN-SUFFIX,cmbchina.com,DIRECT
+
+# ----------------------------------------------------------
+# 7. Netflix 等流媒体 DNS 处理
 # ----------------------------------------------------------
 
 +rules:
@@ -471,11 +532,11 @@ tun:
   - DOMAIN-KEYWORD,netflix,Netflix
   - DOMAIN-KEYWORD,nflxvideo,Netflix
   - DOMAIN-KEYWORD,nflximg,Netflix
-  
+
   # Disney+ DNS 处理
   - DOMAIN-KEYWORD,disney,Disney
   - DOMAIN-KEYWORD,dssott,Disney
-  
+
   # YouTube DNS 处理
   - DOMAIN-KEYWORD,youtube,YouTube
   - DOMAIN-KEYWORD,googlevideo,YouTube
@@ -498,7 +559,7 @@ tun:
 # A: 在终端执行以下命令：
 #    nslookup google.com
 #    # 应该返回境外 IP
-#    
+#
 #    nslookup baidu.com
 #    # 应该返回国内 IP (如 110.242.68.66)
 
@@ -510,7 +571,9 @@ tun:
 # ==== 性能优化建议 ====
 # ==========================================================
 
-# 1. 定期清理 fake-ip-filter 中不需要的域名
-# 2. 已启用加密 DNS (DOH/DOT)
-# 3. 已启用进程级代理控制 (FIND_PROCESS_MODE = strict)
-# 4. 已添加游戏平台 IP 段加速
+# 1. 已启用加密 DNS (DOH/DOT)
+# 2. 已启用进程级代理控制 (FIND_PROCESS_MODE = strict)
+# 3. 已添加游戏平台 IP 段加速
+# 4. 已添加国内常用服务直连 (微信、钉钉、飞书等)
+# 5. 已添加国内 CDN 排除规则
+# 6. 已添加政府网站和银行直连
