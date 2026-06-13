@@ -42,6 +42,9 @@ STACK_TYPE = gvisor
 # 代理模式: rule (推荐) / global / direct
 PROXY_MODE = rule
 
+# 启用 TCP Fast Open (提升连接速度)
+ENABLE_TCP_FAST_OPEN = 1
+
 # ==========================================================
 # ==== DNS 设置 ====
 # ==========================================================
@@ -123,8 +126,8 @@ ENABLE_META_SNIFFER_PURE_IP = 1
 # 启用 TCP 并发
 ENABLE_TCP_CONCURRENT = 1
 
-# 进程查找模式: off / always / strict
-FIND_PROCESS_MODE = off
+# 进程查找模式: off / always / strict (strict: 精确匹配进程)
+FIND_PROCESS_MODE = strict
 
 # 启用统一延迟计算
 ENABLE_UNIFIED_DELAY = 1
@@ -173,7 +176,7 @@ GEOSITE_UPDATE_WEEK_TIME = *
 GEOSITE_UPDATE_DAY_TIME = 5
 
 # ==========================================================
-# ==== 其他功能 ====
+# ==== 性能与监控 ====
 # ==========================================================
 
 # 小闪存模式 (路由器存储空间不足时启用)
@@ -188,6 +191,12 @@ DELAY_START = 0
 # 跳过代理地址
 SKIP_PROXY_ADDRESS = 1
 
+# 最大连接数 (根据路由器性能调整)
+MAX_CONN = 2048
+
+# 启用流量统计
+ENABLE_TRAFFIC_STATS = 1
+
 # 模块更新后重启插件
 RESTART = false
 
@@ -198,7 +207,7 @@ RESTART = false
 [YAML]
 
 # ----------------------------------------------------------
-# 1. DNS 防泄露与 DNS 分流配置
+# 1. DNS 防泄露与 DNS 分流配置 (优化版)
 # ----------------------------------------------------------
 
 # DNS 服务器配置
@@ -220,8 +229,8 @@ dns:
   # Fake-IP 地址池
   fake-ip-range: 198.18.0.1/16
   
-  # Fake-IP 过滤器 (黑名单模式)
-  # 匹配的域名不使用 Fake-IP，直接解析
+  # Fake-IP 过滤器 (精简版)
+  # 使用 geosite 分类替代大量单独域名
   fake-ip-filter-mode: blacklist
   
   fake-ip-filter:
@@ -230,27 +239,16 @@ dns:
     - '+.local'
     - '+.localhost'
     
-    # 国内常见域名
+    # 国内核心域名 (必须直连的)
     - '+.cn'
     - '+.baidu.com'
-    - '+.qq.com'
     - '+.taobao.com'
-    - '+.jd.com'
     - '+.alipay.com'
+    - '+.alicdn.com'
+    - '+.aliyuncs.com'
     - '+.tmall.com'
-    - '+.163.com'
-    - '+.126.com'
-    - '+.sina.com'
-    - '+.weibo.com'
-    - '+.bilibili.com'
-    - '+.douyin.com'
-    - '+.toutiao.com'
-    - '+.zhihu.com'
-    - '+.csdn.net'
-    - '+.gitee.com'
-    - '+.oschina.net'
     
-    # 国内银行和支付
+    # 银行和支付 (安全优先)
     - '+.icbc.com.cn'
     - '+.ccb.com.cn'
     - '+.boc.cn'
@@ -258,87 +256,7 @@ dns:
     - '+.cmbchina.com'
     - '+.pingan.com'
     
-    # 路由器管理界面
-    - '+.router'
-    - '+.gateway'
-    - '+.miwifi.com'
-    - '+.phicomm.com'
-    - '+.tplinkrouter.com'
-    - '+.netkeeper.com'
-    
-    # 国内云服务
-    - '+.aliyun.com'
-    - '+.aliyuncs.com'
-    - '+.taodns.net'
-    - '+.qingcloud.com'
-    - '+.qiniu.com'
-    - '+.bcebos.com'
-    
-    # 防泄露测试域名
-    - '+.ipify.org'
-    - '+.ip.sb'
-    - '+.myip.la'
-    - '+.checkip.amazonaws.com'
-    - '+.ipinfo.io'
-    
-    # Steam 相关 (国内直连)
-    - '+.steampowered.com'
-    - '+.steamcontent.com'
-    - '+.steamstatic.com'
-    - '+.steamcommunity.com'
-    - '+.cm.steampowered.com'
-    
-    # Nintendo
-    - '+.nintendo.net'
-    - '+.nintendo.com'
-    
-    # PlayStation
-    - '+.playstation.net'
-    - '+.sony.com'
-    - '+.sonyentertainmentnetwork.com'
-    
-    # 游戏平台
-    - '+.battle.net'
-    - '+.blizzard.com'
-    - '+.epicgames.com'
-    - '+.ubisoft.com'
-    - '+.riotgames.com'
-    - '+.mihoyo.com'
-    - '+.hoyoverse.com'
-    - '+.bh3.com'
-    
-    # 国内视频
-    - '+.youku.com'
-    - '+.iqiyi.com'
-    - '+.qq.com'
-    - '+.bilibili.com'
-    - '+.douyu.com'
-    - '+.huya.com'
-    - '+.cc.com'
-    
-    # 国内音乐
-    - '+.music.163.com'
-    - '+.y.qq.com'
-    - '+.kugou.com'
-    - '+.kuwo.cn'
-    - '+.xiami.com'
-    
-    # 导航和地图
-    - '+.amap.com'
-    - '+.map.qq.com'
-    - '+.map.baidu.com'
-    - '+.ditu.google.com'
-    
-    # 防止 DNS 泄露的测试域名
-    - '+.dnsleaktest.com'
-    - '+.dnsleak.com'
-    - '+.whatismyip.com'
-    - '+.ipaddress.com'
-    - '+.browserleaks.com'
-    - '+.ipleak.net'
-    - '+.dns.google'
-    
-    # geosite 分类
+    # geosite 分类 (推荐，减少维护成本)
     - 'geosite:cn'
     - 'geosite:private'
     - 'geosite:category-games-cn'
@@ -347,35 +265,34 @@ dns:
     - 'geosite:category-social-media-cn'
     - 'geosite:category-ads-all'
   
-  # 主 DNS 服务器 (国内)
+  # 主 DNS 服务器 (国内 - 加密 DNS)
   nameserver:
-    # 阿里 DNS
-    - 223.5.5.5
-    # 腾讯 DNS
-    - 119.29.29.29
-    # 114 DNS
-    - 114.114.114.114
+    # 阿里 DNS DOH (加密)
+    - https://dns.alidns.com/dns-query
+    # 腾讯 DNS DOH (加密)
+    - https://doh.pub/dns-query
+    # 阿里 DNS DOT (加密)
+    - tls://dns.alidns.com
   
-  # 备用 DNS 服务器 (海外)
+  # 备用 DNS 服务器 (海外 - 加密 DNS)
   # 当国内 DNS 无法解析时使用
   fallback:
-    # Google DNS
-    - 8.8.8.8
-    - 8.8.4.4
-    # Cloudflare DNS
-    - 1.1.1.1
-    - 1.0.0.1
+    # Google DNS DOH/DOT (加密)
+    - https://dns.google/dns-query
+    - tls://dns.google
+    # Cloudflare DNS DOH (加密)
+    - https://cloudflare-dns.com/dns-query
+    - tls://1.1.1.1
   
   # Fallback 过滤规则
-  # 当 fallback DNS 返回以下 IP 段时，使用 nameserver 的结果
+  # 当 fallback DNS 返回国内 IP 时，使用 nameserver 的结果
   fallback-filter:
     # 按地理位置过滤 (GeoIP)
     geoip: true
     geoip-code: CN
     
-    # 按 IP 段过滤
+    # 按 IP 段过滤 (私有地址保留)
     ipcidr:
-      # 国内 IP 段
       - 240.0.0.0/4
       - 0.0.0.0/8
       - 10.0.0.0/8
@@ -384,9 +301,8 @@ dns:
       - 172.16.0.0/12
       - 192.168.0.0/16
     
-    # 域名过滤
+    # 域名过滤 (国内域名优先国内 DNS)
     domain:
-      # 国内域名使用 nameserver
       - '+.cn'
       - '+.baidu.com'
       - '+.taobao.com'
@@ -395,22 +311,19 @@ dns:
   # 为特定域名指定 DNS 服务器
   nameserver-policy:
     # 国内域名使用国内 DNS
-    '+.baidu.com': 223.5.5.5
-    '+.qq.com': 119.29.29.29
-    '+.cn': 223.5.5.5
-    '+.alibaba.com': 223.5.5.5
-    '+.aliyun.com': 223.5.5.5
-    '+.taobao.com': 223.5.5.5
-    '+.jd.com': 223.5.5.5
-    '+.163.com': 119.29.29.29
-    '+.126.com': 119.29.29.29
-    '+.music.163.com': 119.29.29.29
-    '+.bilibili.com': 223.5.5.5
+    '+.baidu.com': https://dns.alidns.com/dns-query
+    '+.qq.com': https://doh.pub/dns-query
+    '+.cn': https://dns.alidns.com/dns-query
+    '+.alibaba.com': https://dns.alidns.com/dns-query
+    '+.aliyun.com': https://dns.alidns.com/dns-query
+    '+.taobao.com': https://dns.alidns.com/dns-query
+    '+.jd.com': https://dns.alidns.com/dns-query
+    '+.bilibili.com': https://dns.alidns.com/dns-query
     
     # 特定域名使用 Google DNS
-    '+.cloudflare.com': 8.8.8.8
-    '+.github.com': 8.8.8.8
-    '+.google.com': 8.8.8.8
+    '+.cloudflare.com': https://dns.google/dns-query
+    '+.github.com': https://dns.google/dns-query
+    '+.google.com': https://dns.google/dns-query
 
 # ----------------------------------------------------------
 # 2. DNS 劫持/污染防护
@@ -470,7 +383,7 @@ tun:
   # 强制绕过局域网
   bypass-lan: false
   
-  # MTU 设置
+  # MTU 设置 (优化值)
   mtu: 9000
   
   # TCP 并发
@@ -481,10 +394,9 @@ tun:
   rule-based-route: true
 
 # ----------------------------------------------------------
-# 4. DNS 泄露测试 + 游戏平台直连规则
+# 4. 游戏加速规则 (域名 + IP 双重匹配)
 # ----------------------------------------------------------
 
-# DNS 泄露测试规则
 +rules:
   # DNS 泄露测试
   - DOMAIN-SUFFIX,dnsleaktest.com,DIRECT
@@ -502,15 +414,32 @@ tun:
   - DOMAIN-SUFFIX,valve.com,DIRECT
   - DOMAIN-SUFFIX,valvesoftware.com,DIRECT
   
+  # Steam CDN IP 段 (游戏加速)
+  - IP-CIDR,23.160.0.0/24,DIRECT
+  - IP-CIDR,45.142.0.0/16,DIRECT
+  - IP-CIDR,103.10.124.0/24,DIRECT
+  - IP-CIDR,155.133.0.0/16,DIRECT
+  - IP-CIDR,162.254.0.0/16,DIRECT
+  - IP-CIDR,205.196.0.0/16,DIRECT
+  
   # Nintendo 域名直连
   - DOMAIN-SUFFIX,nintendo.net,DIRECT
   - DOMAIN-SUFFIX,nintendo.com,DIRECT
   - DOMAIN-SUFFIX,nicovideo.jp,DIRECT
   
+  # Nintendo IP 段
+  - IP-CIDR,34.96.0.0/14,DIRECT
+  - IP-CIDR,104.107.0.0/16,DIRECT
+  - IP-CIDR,110.45.0.0/16,DIRECT
+  
   # PlayStation 域名直连
   - DOMAIN-SUFFIX,playstation.net,DIRECT
   - DOMAIN-SUFFIX,sony.com,DIRECT
   - DOMAIN-SUFFIX,sonyentertainmentnetwork.com,DIRECT
+  
+  # PlayStation IP 段
+  - IP-CIDR,63.245.0.0/16,DIRECT
+  - IP-CIDR,198.160.0.0/16,DIRECT
   
   # 国内游戏直连
   - DOMAIN-SUFFIX,mihoyo.com,DIRECT
@@ -518,13 +447,19 @@ tun:
   - DOMAIN-SUFFIX,bh3.com,DIRECT
   - DOMAIN-SUFFIX,hsr.com,DIRECT
   - DOMAIN-SUFFIX,zzz.com,DIRECT
+  - DOMAIN-SUFFIX,miyoushe.com,DIRECT
+  
+  # Epic Games 域名直连
+  - DOMAIN-SUFFIX,epicgames.com,DIRECT
+  - DOMAIN-SUFFIX,epicusercontent.com,DIRECT
+  - DOMAIN-SUFFIX,unrealengine.com,DIRECT
 
 # ----------------------------------------------------------
 # 5. Netflix 等流媒体 DNS 处理
 # ----------------------------------------------------------
 
-# Netflix DNS 预解析
 +rules:
+  # Netflix DNS 预解析
   - DOMAIN-KEYWORD,netflix,Netflix
   - DOMAIN-KEYWORD,nflxvideo,Netflix
   - DOMAIN-KEYWORD,nflximg,Netflix
@@ -568,9 +503,7 @@ tun:
 # ==========================================================
 
 # 1. 定期清理 fake-ip-filter 中不需要的域名
-# 2. 国内 DNS 使用 DOH/DOT 加密
-#    - 阿里 DNS: https://dns.alidns.com/dns-query
-#    - 腾讯 DNS: https://doh.pub/dns-query
-# 3. 海外 DNS 使用 DOH/DOT 加密
-#    - Google: https://dns.google/dns-query
-#    - Cloudflare: https://cloudflare-dns.com/dns-query
+# 2. 已启用加密 DNS (DOH/DOT)
+# 3. 已启用 TCP Fast Open
+# 4. 已启用进程级代理控制
+# 5. 已添加游戏平台 IP 段加速
