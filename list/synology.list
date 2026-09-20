@@ -1,5 +1,3 @@
-DOMAIN-SUFFIX,ntp2.aliyun.com”# === 群晖远程访问专用代理规则示例 ===
-
 # 1. 群晖官方相关域名，直连
 DOMAIN-SUFFIX,quickconnect.to
 DOMAIN-SUFFIX,quickconnect.cn
@@ -29,7 +27,6 @@ DOMAIN-SUFFIX,familyds.net
 DOMAIN-SUFFIX,familyds.org
 DOMAIN-SUFFIX,i234.me
 DOMAIN-SUFFIX,myds.com
-DOMAIN-SUFFIX,quickconnect.to
 DOMAIN-SUFFIX,synodns.com
 DOMAIN-SUFFIX,synology.cn
 DOMAIN-SUFFIX,synology.com
@@ -71,7 +68,6 @@ DOMAIN-SUFFIX,ntp7.aliyun.com
 DOMAIN-SUFFIX,ntp7.cloud.aliyuncs.com
 DOMAIN-SUFFIX,ntp8.cloud.aliyuncs.com
 DOMAIN-SUFFIX,ntp9.cloud.aliyuncs.com
-DOMAIN-SUFFIX,pool.ntp.org
 DOMAIN-SUFFIX,s1a.time.edu.cn
 DOMAIN-SUFFIX,s1b.time.edu.cn
 DOMAIN-SUFFIX,s1c.time.edu.cn
@@ -116,6 +112,7 @@ DOMAIN-SUFFIX,time4.tencentyun.com
 DOMAIN-SUFFIX,time5.aliyun.com
 DOMAIN-SUFFIX,time5.apple.com
 DOMAIN-SUFFIX,time5.cloud.tencent.com
+DOMAIN-SUFFIX,time5.google.com
 DOMAIN-SUFFIX,time5.tencentyun.com
 DOMAIN-SUFFIX,time6.aliyun.com
 DOMAIN-SUFFIX,time6.apple.com

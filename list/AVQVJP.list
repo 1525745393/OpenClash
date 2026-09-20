@@ -31,7 +31,6 @@ DOMAIN-SUFFIX,mvg.jp
 DOMAIN-SUFFIX,nanpa-japan.jp
 DOMAIN-SUFFIX,oppai-av.com
 DOMAIN-SUFFIX,premium-beauty.com
-DOMAIN-SUFFIX,prestige-av.com
 DOMAIN-SUFFIX,www.prestige-av.com
 DOMAIN-SUFFIX,rookie-av.jp
 DOMAIN-SUFFIX,s1s1s1.com
@@ -91,7 +90,6 @@ DOMAIN,*.ds-linear-abematv.akamaized.net
 # ==========================
 # MGStage 主站及资源（直连/黑名单）
 # ==========================
-- DOMAIN-SUFFIX,mgstage.com
 - DOMAIN-SUFFIX,mgstage.net
 - DOMAIN-SUFFIX,mgstage.jp
 - DOMAIN-SUFFIX,image.mgstage.com
@@ -103,7 +101,6 @@ DOMAIN,*.ds-linear-abematv.akamaized.net
 # ==========================
 # 常用 CDN / 静态资源（直连/黑名单）
 # ==========================
-- DOMAIN-SUFFIX,akamaized.net
 - DOMAIN-SUFFIX,cloudfront.net
 
 # ==========================
@@ -112,31 +109,3 @@ DOMAIN,*.ds-linear-abematv.akamaized.net
 DOMAIN-SUFFIX,dmmgames.com
 DOMAIN-SUFFIX,dmmplay.com
 DOMAIN-SUFFIX,dmmwallet.com
-DOMAIN-SUFFIX,fanza-douga.com
-DOMAIN-SUFFIX,fanzacdn.com
-DOMAIN-SUFFIX,fanzavideo.com
-DOMAIN-SUFFIX,fanzaaudio.com
-
-DOMAIN,api.abema.io
-DOMAIN,log.abema.io
-DOMAIN,ws-abema-production.abema.io
-DOMAIN,ssl-pub.abema.io
-DOMAIN,ds-linear-abematv.akamaized.net
-DOMAIN,vod-abematv.akamaized.net
-DOMAIN,abematv.akamaized.net
-DOMAIN,contents-abematv.akamaized.net
-DOMAIN,playback-abematv.akamaized.net
-DOMAIN,d-xx.cdn.abema-tv.com
-DOMAIN-SUFFIX,mgstage.com
-DOMAIN-SUFFIX,mgstage.net
-DOMAIN-SUFFIX,mgstage.jp
-
-DOMAIN-SUFFIX,al.fanza.co.jp
-DOMAIN-SUFFIX,av-opera.jp
-DOMAIN-SUFFIX,dahlia-av.jp
-DOMAIN-SUFFIX,faleno.jp
-DOMAIN-SUFFIX,giga-web.jp
-DOMAIN-SUFFIX,honnaka.jp
-DOMAIN-SUFFIX,mvg.jp
-DOMAIN-SUFFIX,rookie-av.jp
-DOMAIN-SUFFIX,xcity.jp
