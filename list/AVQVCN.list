@@ -1,18 +1,28 @@
-# AV资源站.list - 日本 AV 资源站、索引站域名列表
-# 更新时间：2025-08-01
-# 用于分流资源站，建议单独作为一个规则集
-# 共 10 条规则
+#直连
+DOMAIN-SUFFIX,xchina001.online
+DOMAIN-SUFFIX,javmenu18.cc
+DOMAIN-SUFFIX,xchina.io
+DOMAIN-SUFFIX,xchina.download
+DOMAIN-SUFFIX,xchina.co
+DOMAIN-SUFFIX,javdb580.com
 
+DOMAIN-SUFFIX,supjav.com
+DOMAIN-SUFFIX,surrit.com
+DOMAIN-SUFFIX,voe.sx
+
+DOMAIN-SUFFIX,c97k.com
+DOMAIN-SUFFIX,javdb570.com
+DOMAIN-SUFFIX,fc2hub.com
+DOMAIN-SUFFIX,javten.com
+DOMAIN-SUFFIX,jable.tv
+DOMAIN-SUFFIX,paycalling.com
+DOMAIN-SUFFIX,gg5.co
 DOMAIN-SUFFIX,airav.wiki
 DOMAIN-SUFFIX,av-wiki.net
-DOMAIN-SUFFIX,cableav.tv
 DOMAIN-SUFFIX,cnmdb.net
-DOMAIN-SUFFIX,fc2club.top
-DOMAIN-SUFFIX,hscangku.net
-DOMAIN-SUFFIX,javten.com
-DOMAIN-SUFFIX,love6.tv
 DOMAIN-SUFFIX,lulubar.co
-DOMAIN-SUFFIX,yesjav.info
-DOMAIN-SUFFIX,avsox.click
-DOMAIN-SUFFIX,getchu.com
-DOMAIN-SUFFIX,trae.ai
+DOMAIN-SUFFIX,netflav.com
+# NTP 时间同步必须直连
+DOMAIN-SUFFIX,pool.ntp.org
+DOMAIN-KEYWORD,ntp
+DST-PORT,123
