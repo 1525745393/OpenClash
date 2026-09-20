@@ -109,3 +109,13 @@ DOMAIN,*.ds-linear-abematv.akamaized.net
 DOMAIN-SUFFIX,dmmgames.com
 DOMAIN-SUFFIX,dmmplay.com
 DOMAIN-SUFFIX,dmmwallet.com
+
+# ==========================
+# 合并自 AVJP.list
+# ==========================
+DOMAIN-SUFFIX,prestige-av.com
+DOMAIN-SUFFIX,seesaa.jp
+DOMAIN-SUFFIX,seesaawiki.jp
+DOMAIN-SUFFIX,mgstage.com
+DOMAIN-SUFFIX,fantastica-vr.com
+DOMAIN-SUFFIX,kin8tengoku.com
