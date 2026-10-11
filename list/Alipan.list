@@ -1,0 +1,9 @@
+# 阿里云盘（AliyunDrive / Alipan）——国内服务，强制直连
+# 覆盖：网页版 www.alipan.com、API api.alipan.com、旧域名 aliyundrive.com、下载 CDN aliyundrive.net、曾用域名 aliyunpan.com
+# 关联配置：RULE-SET,Alipan / Domain,强制直连
+
+payload:
+  - alipan.com
+  - aliyundrive.com
+  - aliyundrive.net
+  - aliyunpan.com
