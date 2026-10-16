@@ -2,13 +2,11 @@
 # 用途：防 DNS 泄露最后一环——App 自带 DoH/DoT 绕过路由器 53 劫持
 # 机制：mihomo sniffer 还原 TLS SNI → 命中本清单 → REJECT → App 降级走系统 DNS → 被 dns-hijack 接管
 # 维护：1525745393/OpenClash 规则库
+# 2026-10-17 修正：移除国内 DoH（dns.alidns.com/doh.pub/dns.qq.com/dns.360.cn），避免 v51 RULE-SET 误伤本机 MosDNS 上游
 dns.google
 dns.google.com
 cloudflare-dns.com
 one.one.one.one
-dns.alidns.com
-doh.pub
-dns.qq.com
 dns.nextdns.io
 dns.quad9.net
 doh.opendns.com
@@ -17,4 +15,3 @@ doh.mullvad.net
 dns.controld.com
 doh.dns.sb
 dns.twnic.tw
-dns.360.cn
