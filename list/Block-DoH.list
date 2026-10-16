@@ -1,0 +1,20 @@
+# Block-DoH：封禁知名公共 DoH 服务器，强制局域网设备走路由器 DNS
+# 用途：防 DNS 泄露最后一环——App 自带 DoH/DoT 绕过路由器 53 劫持
+# 机制：mihomo sniffer 还原 TLS SNI → 命中本清单 → REJECT → App 降级走系统 DNS → 被 dns-hijack 接管
+# 维护：1525745393/OpenClash 规则库
+dns.google
+dns.google.com
+cloudflare-dns.com
+one.one.one.one
+dns.alidns.com
+doh.pub
+dns.qq.com
+dns.nextdns.io
+dns.quad9.net
+doh.opendns.com
+dns.adguard.com
+doh.mullvad.net
+dns.controld.com
+doh.dns.sb
+dns.twnic.tw
+dns.360.cn
