@@ -1,9 +1,0 @@
-# Byte-Direct：字节系信令/云服务强制直连
-# 用途：豆包手机控制电脑等跨端信令走真实 IP 直连，避免 fake-ip 进兜底代理死节点区
-# 机制：rule-provider behavior=classical，DOMAIN-SUFFIX 行按域名后缀匹配 → RULE-SET → 直连
-# 维护：1525745393/OpenClash 规则库
-# 2026-10-26 建立（v56 起由 RuleSet 集中管理，替代 v53 硬编码 DOMAIN-SUFFIX 规则）
-DOMAIN-SUFFIX,ieso365.com
-DOMAIN-SUFFIX,doubao.com
-DOMAIN-SUFFIX,byteimg.com
-DOMAIN-SUFFIX,volcengine.com
