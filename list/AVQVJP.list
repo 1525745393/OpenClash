@@ -83,25 +83,25 @@ DOMAIN-SUFFIX,ameba.jp
 DOMAIN-SUFFIX,akamaized.net
 
 # ★仅 Clash.Meta 支持，如不使用Meta可注释
-DOMAIN,*.abematv.akamaized.net
-DOMAIN,*.vod-abematv.akamaized.net
-DOMAIN,*.ds-linear-abematv.akamaized.net
+DOMAIN-SUFFIX,abematv.akamaized.net
+DOMAIN-SUFFIX,vod-abematv.akamaized.net
+DOMAIN-SUFFIX,ds-linear-abematv.akamaized.net
 
 # ==========================
 # MGStage 主站及资源（直连/黑名单）
 # ==========================
-- DOMAIN-SUFFIX,mgstage.net
-- DOMAIN-SUFFIX,mgstage.jp
-- DOMAIN-SUFFIX,image.mgstage.com
-- DOMAIN-SUFFIX,cdn.mgstage.com
-- DOMAIN-SUFFIX,video.mgstage.com
-- DOMAIN-SUFFIX,media.mgstage.com
-- DOMAIN-SUFFIX,static.mgstage.com
+DOMAIN-SUFFIX,mgstage.net
+DOMAIN-SUFFIX,mgstage.jp
+DOMAIN-SUFFIX,image.mgstage.com
+DOMAIN-SUFFIX,cdn.mgstage.com
+DOMAIN-SUFFIX,video.mgstage.com
+DOMAIN-SUFFIX,media.mgstage.com
+DOMAIN-SUFFIX,static.mgstage.com
 
 # ==========================
 # 常用 CDN / 静态资源（直连/黑名单）
 # ==========================
-- DOMAIN-SUFFIX,cloudfront.net
+DOMAIN-SUFFIX,cloudfront.net
 
 # ==========================
 # Japan-Only 仅日本访问域名（追加在末尾）
