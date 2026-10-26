@@ -18,7 +18,6 @@ DOMAIN-SUFFIX,gg5.co
 DOMAIN-SUFFIX,av-wiki.net
 DOMAIN-SUFFIX,cnmdb.net
 DOMAIN-SUFFIX,lulubar.co
-DOMAIN-SUFFIX,netflav.com
 # NTP 时间同步必须直连
 DOMAIN-SUFFIX,pool.ntp.org
 DOMAIN-KEYWORD,ntp
