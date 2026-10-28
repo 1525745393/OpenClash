@@ -4,12 +4,18 @@
 #   - AGH 国外  192.168.1.6:5551  上游海外 DoH，容器出站必须走代理
 # 用法：OpenClash 覆写管理 → 添加覆写 → 类型 YAML → 粘贴并启用 → 重启内核
 # 回退：关闭此覆写并重启内核即恢复 v56 原生 DNS，主配置不改动
-# 注意：AGH 国外实例(5551)出站若直连会导致上游污染，必须走代理
+# v56 兼容要点：
+#   - listen 必须保持 0.0.0.0:7874（OpenClash Dnsmasq Redirect 链路端口，勿改 53）
+#   - 双 AGH 上游均可信，fallback 清空，避免海外 DoH 直连失败路径
+#   - nameserver-policy 键避开 ! 特殊字符（规范要求键名含特殊字符用 <key>）
 dns!:
   enable: true
-  listen: 0.0.0.0:53
+  listen: 0.0.0.0:7874
+  ipv6: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.20.0.1/16
+  cache: true
+  cache-algorithm: lru
   default-nameserver:
     - 119.29.29.29
     - 223.5.5.5
@@ -18,18 +24,14 @@ dns!:
   nameserver-policy:
     "geosite:cn":
       - udp://192.168.1.6:5550
-    "geosite:geolocation-!cn,geosite:google,geosite:github,geosite:openai":
+    "geosite:google":
+      - udp://192.168.1.6:5551
+    "geosite:github":
+      - udp://192.168.1.6:5551
+    "geosite:openai":
       - udp://192.168.1.6:5551
   proxy-server-nameserver:
     - udp://192.168.1.6:5550
   direct-nameserver:
     - udp://192.168.1.6:5550
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
-    ipcidr:
-      - 240.0.0.0/4
-    domain:
-      - "+.google.com"
-      - "+.facebook.com"
-      - "+.twitter.com"
+  fallback: []
